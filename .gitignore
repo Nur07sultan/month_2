@@ -4,3 +4,5 @@ __pycach__/
 .env
 *.db
 *.sqlite
+.idea
+.venv
