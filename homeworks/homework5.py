@@ -1,28 +1,34 @@
-# homeworks/homework_5.py
 from homeworks.distance import Distance
 
-# создаём несколько экземпляров
-d1 = Distance(10, "m")
-d2 = Distance(2, "km")
-d3 = Distance(1200, "m")
+# Основные проверки
+a = Distance(100, "m")
+b = Distance(1, "km")
+c = Distance(50, "cm")
 
-print("Инициализация и вывод:")
-print(d1)  # 10 m
-print(d2)  # 2 km
-print(d3)  # 1200 m
+print(a, "+", b, "=", a + b)       # 100 м + 1 км
+print(b, "-", a, "=", b - a)       # 1 км - 100 м
+print("Сравнение:", a, "<", b, "?", a < b)
+print("Сравнение:", a, "==", Distance(100, "m"), "?", a == Distance(100, "m"))
+print("Сравнение:", c, "<", a, "?", c < a)
 
-print("\nСложение:")
-print(d1 + d3)  # 1210 m
-print(d2 + d1)  # 2010 m (в метрах, потому что d2 приведётся к метрам)
+# -----------------------------
+# Доп. задание: список расстояний
+# -----------------------------
+distances = [
+    Distance(500, "m"),
+    Distance(2, "km"),
+    Distance(150, "cm"),
+    Distance(50, "m"),
+]
 
-print("\nВычитание:")
-print(d3 - d1)  # 1190 m
-try:
-    print(d1 - d2)  # должно выбросить ошибку (отрицательный результат)
-except ValueError as e:
-    print("Ошибка:", e)
+print("\nИсходный список:")
+for d in distances:
+    print(d)
 
-print("\nСравнения:")
-print(d1 == Distance(1000, "cm"))   # True
-print(d2 > d3)                      # True (2000 m > 1200 m)
-print(d1 < d3)                      # True
+print("\nСортировка по величине:")
+for d in sorted(distances):
+    print(d)
+
+print("\nМаксимальное расстояние:", max(distances))
+print("Минимальное расстояние:", min(distances))
+
