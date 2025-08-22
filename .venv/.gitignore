@@ -1,0 +1,6 @@
+.venv/
+venv/
+__pycach__/
+.env
+*.db
+*.sqlite
