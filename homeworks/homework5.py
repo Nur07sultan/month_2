@@ -1,80 +1,28 @@
-class Distance:
-    conversion_factors = {
-        'centimeters': 1,
-        'meters': 100,
-        'kilometers': 100000,
-    }
+# homeworks/homework_5.py
+from homeworks.distance import Distance
 
-    def __init__(self, value, unit):
-        if unit not in self.conversion_factors:
-            raise ValueError(f"Unsupported unit: {unit}")
-        self.value = value
-        self.unit = unit
+# создаём несколько экземпляров
+d1 = Distance(10, "m")
+d2 = Distance(2, "km")
+d3 = Distance(1200, "m")
 
-    def __str__(self):
-        return f"{self.value} {self.unit}"
+print("Инициализация и вывод:")
+print(d1)  # 10 m
+print(d2)  # 2 km
+print(d3)  # 1200 m
 
-    @staticmethod
-    def convert(value, from_unit, to_unit):
-        if from_unit == to_unit:
-            return value
-        return value * (Distance.conversion_factors[from_unit] / Distance.conversion_factors[to_unit])
+print("\nСложение:")
+print(d1 + d3)  # 1210 m
+print(d2 + d1)  # 2010 m (в метрах, потому что d2 приведётся к метрам)
 
-    def __add__(self, other):
-        if not isinstance(other, Distance):
-            return NotImplemented
-        total_value = self.convert(self.value, self.unit, other.unit) + other.value
-        return Distance(total_value, other.unit)
+print("\nВычитание:")
+print(d3 - d1)  # 1190 m
+try:
+    print(d1 - d2)  # должно выбросить ошибку (отрицательный результат)
+except ValueError as e:
+    print("Ошибка:", e)
 
-    def __sub__(self, other):
-        if not isinstance(other, Distance):
-            return NotImplemented
-        total_value = self.convert(self.value, self.unit, other.unit) - other.value
-        if total_value < 0:
-            raise ValueError("Resulting distance cannot be negative")
-        return Distance(total_value, other.unit)
-
-    def __lt__(self, other):
-        if not isinstance(other, Distance):
-            return NotImplemented
-        return self.convert(self.value, self.unit, other.unit) < other.value
-
-    def __le__(self, other):
-        return self < other or self == other
-
-    def __eq__(self, other):
-        if not isinstance(other, Distance):
-            return NotImplemented
-        return self.convert(self.value, self.unit, other.unit) == other.value
-
-    def __gt__(self, other):
-        return not (self <= other)
-
-    def __ge__(self, other):
-        return not (self < other)
-
-
-def main():
-    d1 = Distance(10, 'meters')
-    d2 = Distance(2, 'kilometers')
-    d3 = Distance(500, 'centimeters')
-
-    print("Distance 1:", d1)
-    print("Distance 2:", d2)
-    print("Distance 3:", d3)
-
-    # Сложение
-    sum_distance = d1 + d2
-    print("Sum:", sum_distance)
-
-    # Вычитание
-    sub_distance = d2 - d1
-    print("Subtraction:", sub_distance)
-
-    # Проверка сравнения
-    print("Is d1 < d2?", d1 < d2)
-    print("Is d2 > d3?", d2 > d3)
-
-
-if __name__ == "__main__":
-    main()
+print("\nСравнения:")
+print(d1 == Distance(1000, "cm"))   # True
+print(d2 > d3)                      # True (2000 m > 1200 m)
+print(d1 < d3)                      # True
